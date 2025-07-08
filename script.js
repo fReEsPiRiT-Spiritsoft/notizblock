@@ -10,6 +10,9 @@ let notes = [
     // "beispiel notiz 3",
 ];
 
+let archivNotesTitles = [];
+let archivhNotes = [];
+
 let trashNotesTitles = [];
 let trashNotes = [];
 
@@ -39,13 +42,26 @@ function renderTrashNotes() {
     }
 }
 
+function renderArchivNotes() {
+    let archivContentRef = document.getElementById("archiv_content");
+    archivContentRef.innerHTML = '';
+    for (let indexArchivNote = 0; indexArchivNote < archivhNotes.length; indexArchivNote++) {
+        // const note = notes[indexArchivNote];
+
+        archivContentRef.innerHTML += getArchivNoteTemplate(indexArchivNote);
+    }
+}
+
 
 function getNoteTemplate(indexNote) {
     return `
     <div class="note-card">
         <div class="note-title">${notesTitles[indexNote]}</div>
         <div class="note-content">${notes[indexNote]}</div>
+        <div class="note-btns">
         <img class="delete-btn" src="./icons/ereaser.png" alt="Löschen" onclick="moveToTrash(${indexNote})">
+        <img class="archiv-btn" src="./icons/archiv.png" alt="Archivieren" onclick="moveToArchiv(${indexNote})">
+        </div>
     </div>
     `;
 }
@@ -57,6 +73,20 @@ function getTrashNoteTemplate(indexTrashNote) {
         <div class="note-title">${trashNotesTitles[indexTrashNote]}</div>
         <div class="note-content">${trashNotes[indexTrashNote]}</div>
         <img class="delete-btn" src="./icons/ereaser.png" alt="Löschen" onclick="deleteNote(${indexTrashNote})">
+    </div>
+    `;
+}
+
+
+function getArchivNoteTemplate(indexArchivNote) {
+    return `
+    <div class="note-card">
+        <div class="note-title">${archivNotesTitles[indexArchivNote]}</div>
+        <div class="note-content">${archivhNotes[indexArchivNote]}</div>
+        <div style="display:flex; gap:10px; justify-content:space-between;">
+            <img class="delete-btn" src="./icons/ereaser.png" alt="Löschen" onclick="deleteArchivNote(${indexArchivNote})">
+            <img class="delete-btn" src="./icons/speichern.png" alt="Zurückholen" onclick="restoreArchivNote(${indexArchivNote})">
+        </div>
     </div>
     `;
 }
@@ -96,6 +126,13 @@ function deleteNote(indexTrashNote) {
     renderTrashNotes();
 }
 
+function moveToArchiv(indexNote) {
+    let archivNote = notes.splice(indexNote, 1);
+    archivhNotes.push(archivNote[0]);
+    let archivNoteTitle = notesTitles.splice(indexNote, 1);
+    archivNotesTitles.push(archivNoteTitle[0]);
+    renderNotes();
+}
 
 function saveToLocalStorage(){
     localStorage.setItem("notesTitles", JSON.stringify(notesTitles));
@@ -114,4 +151,31 @@ function getFromLocalStorage(){
 }
 
 // notizen archivieren
-// notizen bearbeiten
+function openArchivOverlay() {
+    document.getElementById('archivOverlay').classList.remove('d-none');
+    renderArchivNotes();
+}
+function closeArchivOverlay() {
+    document.getElementById('archivOverlay').classList.add('d-none');
+}
+
+
+
+// Archivierte Notiz löschen
+function deleteArchivNote(indexArchivNote) {
+    archivNotesTitles.splice(indexArchivNote, 1);
+    archivhNotes.splice(indexArchivNote, 1);
+    renderArchivNotes();
+    // Optional: localStorage aktualisieren
+}
+
+// Archivierte Notiz zurückholen
+function restoreArchivNote(indexArchivNote) {
+    notesTitles.push(archivNotesTitles[indexArchivNote]);
+    notes.push(archivhNotes[indexArchivNote]);
+    archivNotesTitles.splice(indexArchivNote, 1);
+    archivhNotes.splice(indexArchivNote, 1);
+    renderArchivNotes();
+    renderNotes();
+    // Optional: localStorage aktualisieren
+}
