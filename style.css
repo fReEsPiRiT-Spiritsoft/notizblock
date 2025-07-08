@@ -48,11 +48,67 @@ header{
     transition: transform 0.3s ease;
 }
 .btn img:hover {
-    width: 197px;
-    height: 87px;
+    /* width: 197px;
+    height: 87px; */
     border-radius: 50%;
     cursor: pointer;
     transition: transform 0.3s ease;
+    transform: scale(1.15);
+}
+.note-card {
+    background: #e0e0e0;
+    border-radius: 20px;
+    padding: 20px 20px 40px 20px;
+    margin: 20px auto;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.note-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+.note-content {
+    margin-bottom: 10px;
+    word-break: break-word;
+}
+.delete-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.8s;
+}
+.delete-btn:hover {
+    opacity: 1;
+}
+h2 {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 50px;
+    color: #333;
+}
+.trash-card {
+    position: relative;
+    overflow: hidden;
+}
+.trash-card::after {
+    content: "";
+    position: absolute;
+    left: -20%;
+    top: 50%;
+    width: 140%;
+    height: 4px;
+    background: red;
+    transform: rotate(-15deg);
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.7;
 }
 @media (max-width: 600px) {
     .input {

@@ -41,12 +41,24 @@ function renderTrashNotes() {
 
 
 function getNoteTemplate(indexNote) {
-    return `<p>+ Titel: ${notesTitles[indexNote]} <br> Notiz: ${notes[indexNote]}<button onclick="moveToTrash(${indexNote})">x</button><br><br></p>`
+    return `
+    <div class="note-card">
+        <div class="note-title">${notesTitles[indexNote]}</div>
+        <div class="note-content">${notes[indexNote]}</div>
+        <img class="delete-btn" src="./icons/ereaser.png" alt="Löschen" onclick="moveToTrash(${indexNote})">
+    </div>
+    `;
 }
 
 
 function getTrashNoteTemplate(indexTrashNote) {
-    return `<p>+ Titel: ${trashNotesTitles[indexTrashNote]} <br> Notiz:  ${trashNotes[indexTrashNote]}<button onclick="moveToTrash(${indexTrashNote})">x</button><br><br></p>`
+    return `
+    <div class="note-card trash-card">
+        <div class="note-title">${trashNotesTitles[indexTrashNote]}</div>
+        <div class="note-content">${trashNotes[indexTrashNote]}</div>
+        <img class="delete-btn" src="./icons/ereaser.png" alt="Löschen" onclick="deleteNote(${indexTrashNote})">
+    </div>
+    `;
 }
 
 
