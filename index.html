@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,17 +9,29 @@
     <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body onload="renderNotes()">
-    <h1>Notizblock</h1>
 
-    <input type="text" id="noteInput" placeholder="Neue Notiz...">
-    <button onclick="addNote()">Notiz speichern</button>
+<body onload="init()">
+    <header>
+        <h1>Notizblock</h1>
+    </header>
+
+    <section class="input">
+        <input type="text" id="noteTitleInput" placeholder="Bitte gib einen Titel ein" required>
+        <textarea id="noteInput" placeholder="Neue Notiz..." required></textarea>
+
+    </section>
+    <div class="btn">
+        <!-- <button onclick="addNote()">Notiz speichern</button> -->
+         <img src="./icons/speichern.png" onclick="addNote()" alt="">
+    </div>
+
     <h2>Notizen</h2>
     <div id="content"></div>
     <br>
     <br>
     <h2>Mülleimer</h2>
     <div id="trash_content"></div>
-    
+
 </body>
+
 </html>
