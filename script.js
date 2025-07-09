@@ -1,5 +1,5 @@
-let notesTitles = [];
-let notes = [];
+let notesTitles = ["Test Notiz",];
+let notes = ["Manchmal fliegt ein Gedanke wie ein Vogel durch den Kopf, bleibt kurz sitzen, pickt an einer Idee und fliegt weiter ins Unbekannte. Vielleicht war es nur ein Hauch von Inspiration – oder der Anfang von etwas Großem. Wer weiß? Wichtig ist: Weiterdenken, weitermachen, frei sein.",];
 
 let archivNotesTitles = [];
 let archivNotes = [];
@@ -222,6 +222,7 @@ function getFromLocalStorage() {
     if (savedTrashTitles) trashNotesTitles = savedTrashTitles;
     if (savedTrashNotes) trashNotes = savedTrashNotes;
 }
+
 
 // notizen archivieren
 function openArchivOverlay() {
