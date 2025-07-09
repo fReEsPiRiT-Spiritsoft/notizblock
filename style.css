@@ -1,7 +1,7 @@
 *{
     box-sizing: border-box;
     margin: 0;
-    scroll-behavor: smooth;
+    scroll-behavior: smooth;
 }
 .input{
     display: flex;
@@ -75,7 +75,17 @@ header{
     word-break: break-word;
 }
 .delete-btn {
-    position: absolute;
+    /* position: absolute; */
+    bottom: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.8s;
+}
+.save-btn {
+    /* position: absolute; */
     bottom: 15px;
     right: 15px;
     width: 32px;
@@ -177,6 +187,10 @@ h2 {
     right: 25px;
     font-size: 2em;
     cursor: pointer;
+}
+.input-error {
+    border: 2px solid red !important;
+    color: red !important;
 }
 @media (max-width: 600px) {
     .input {
