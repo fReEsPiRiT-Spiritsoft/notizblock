@@ -95,7 +95,7 @@ header{
     transition: opacity 0.8s;
 }
 .archiv-btn {
-    position: absolute;
+    /* position: absolute; */
     bottom: 15px;
     right: 60px;
     width: 32px;
