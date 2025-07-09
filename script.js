@@ -93,6 +93,15 @@ function getArchivNoteTemplate(indexArchivNote) {
 }
 
 
+//schauen ob in der textarea die entertatste gedrückt wird, wenn ja   addNote() ausführen
+function checkEnter(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        addNote();
+    }
+}
+
+
 //notizen hinzufügen
 function addNote() {
     let noteInputRef = document.getElementById("noteInput");
