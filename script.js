@@ -98,45 +98,65 @@ function checkEnter(event) {
 
 //notizen hinzufügen
 function addNote() {
-    let noteInputRef = document.getElementById("noteInput");
-    let noteInput = noteInputRef.value;
-    let noteTitleInputRef = document.getElementById("noteTitleInput");
-    let noteTitleInput = noteTitleInputRef.value;
-    if (!validateInput(noteTitleInputRef, noteInputRef, noteTitleInput, noteInput)) return;
-    notesTitles.push(noteTitleInput);
-    notes.push(noteInput);
-    renderNotes();
-    saveToLocalStorage();
-    noteInputRef.value = "";
-    noteTitleInputRef.value = "";
-    noteTitleInputRef.focus();
+    const noteTitleInputRef = document.getElementById("noteTitleInput");
+    const noteInputRef = document.getElementById("noteInput");
+    const noteTitleInput = noteTitleInputRef.value;
+    const noteInput = noteInputRef.value;
+
+    if (!validateInputs(noteTitleInputRef, noteInputRef, noteTitleInput, noteInput)) return;
+
+    saveNote(noteTitleInput, noteInput);
+    resetInputs(noteTitleInputRef, noteInputRef);
 }
 
-
-function validateInput(titleRef, noteRef, title, note) {
+function validateInputs(titleRef, noteRef, title, note) {
     let error = false;
     if (!title) {
-        titleRef.value = "";
-        titleRef.placeholder = "Bitte einen Titel eingeben!";
-        titleRef.classList.add("input-error");
+        showInputError(titleRef, "Bitte einen Titel eingeben!");
         error = true;
     }
     if (!note) {
-        noteRef.value = "";
-        noteRef.placeholder = "Bitte eine Notiz eingeben!";
-        noteRef.classList.add("input-error");
+        showInputError(noteRef, "Bitte eine Notiz eingeben!");
         error = true;
     }
     if (error) {
-        setTimeout(() => {
-            titleRef.classList.remove("input-error");
-            noteRef.classList.remove("input-error");
-            titleRef.placeholder = "Bitte gib einen Titel ein";
-            noteRef.placeholder = "Neue Notiz...";
-        }, 2500);
+        setTimeout(() => resetInputStyles(titleRef, noteRef), 2500);
         return false;
     }
     return true;
+}
+
+function showInputError(ref, message) {
+    ref.value = "";
+    ref.placeholder = message;
+    ref.classList.add("input-error");
+}
+
+function resetInputStyles(titleRef, noteRef) {
+    titleRef.classList.remove("input-error");
+    noteRef.classList.remove("input-error");
+    titleRef.placeholder = "Bitte gib einen Titel ein";
+    noteRef.placeholder = "Neue Notiz...";
+}
+
+function saveNote(title, note) {
+    notesTitles.push(title);
+    notes.push(note);
+    renderNotes();
+    saveToLocalStorage();
+}
+
+function resetInputs(titleRef, noteRef) {
+    noteRef.value = "";
+    titleRef.value = "";
+    titleRef.focus();
+}
+
+
+function checkTitleInput(ref, message) {
+    titleRef.value = "";
+    titleRef.placeholder = "Bitte einen Titel eingeben!";
+    titleRef.classList.add("input-error");
 }
 
 //in mülleimer verschieben
