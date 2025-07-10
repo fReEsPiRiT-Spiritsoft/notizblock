@@ -21,8 +21,6 @@ function renderNotes() {
     let contentRef = document.getElementById("content");
     contentRef.innerHTML = '';
     for (let indexNote = 0; indexNote < notes.length; indexNote++) {
-        // const note = notes[indexNote];
-
         contentRef.innerHTML += getNoteTemplate(indexNote);
     }
 }
@@ -33,8 +31,6 @@ function renderTrashNotes() {
     let trashContentRef = document.getElementById("trash_content");
     trashContentRef.innerHTML = '';
     for (let indexTrashNote = 0; indexTrashNote < trashNotes.length; indexTrashNote++) {
-        // const note = notes[indexTrashNote];
-
         trashContentRef.innerHTML += getTrashNoteTemplate(indexTrashNote);
     }
 }
@@ -44,8 +40,6 @@ function renderArchivNotes() {
     let archivContentRef = document.getElementById("archiv_content");
     archivContentRef.innerHTML = '';
     for (let indexArchivNote = 0; indexArchivNote < archivNotes.length; indexArchivNote++) {
-        // const note = notes[indexArchivNote];
-
         archivContentRef.innerHTML += getArchivNoteTemplate(indexArchivNote);
     }
 }
@@ -108,33 +102,7 @@ function addNote() {
     let noteInput = noteInputRef.value;
     let noteTitleInputRef = document.getElementById("noteTitleInput");
     let noteTitleInput = noteTitleInputRef.value;
-
-    // Prüfen ob wir inhalt in den inpiuts haben
-    let error = false;
-    if (!noteTitleInput) {
-        noteTitleInputRef.value = "";
-        noteTitleInputRef.placeholder = "Bitte einen Titel eingeben!";
-        noteTitleInputRef.classList.add("input-error");
-        error = true;
-    }
-
-    if (!noteInput) {
-        noteInputRef.value = "";
-        noteInputRef.placeholder = "Bitte eine Notiz eingeben!";
-        noteInputRef.classList.add("input-error");
-        error = true;
-    }
-
-    if (error) {
-        setTimeout(() => {
-            noteTitleInputRef.classList.remove("input-error");
-            noteInputRef.classList.remove("input-error");
-            noteTitleInputRef.placeholder = "Bitte gib einen Titel ein";
-            noteInputRef.placeholder = "Neue Notiz...";
-        }, 2500);
-        return;
-    }
-
+    if (!validateInput(noteTitleInputRef, noteInputRef, noteTitleInput, noteInput)) return;
     notesTitles.push(noteTitleInput);
     notes.push(noteInput);
     renderNotes();
@@ -144,6 +112,32 @@ function addNote() {
     noteTitleInputRef.focus();
 }
 
+
+function validateInput(titleRef, noteRef, title, note) {
+    let error = false;
+    if (!title) {
+        titleRef.value = "";
+        titleRef.placeholder = "Bitte einen Titel eingeben!";
+        titleRef.classList.add("input-error");
+        error = true;
+    }
+    if (!note) {
+        noteRef.value = "";
+        noteRef.placeholder = "Bitte eine Notiz eingeben!";
+        noteRef.classList.add("input-error");
+        error = true;
+    }
+    if (error) {
+        setTimeout(() => {
+            titleRef.classList.remove("input-error");
+            noteRef.classList.remove("input-error");
+            titleRef.placeholder = "Bitte gib einen Titel ein";
+            noteRef.placeholder = "Neue Notiz...";
+        }, 2500);
+        return false;
+    }
+    return true;
+}
 
 //in mülleimer verschieben
 function moveToTrash(indexNote) {
@@ -223,7 +217,6 @@ function getFromLocalStorage() {
     let savedArchivNotes = JSON.parse(localStorage.getItem("archivNotes"));
     let savedTrashTitles = JSON.parse(localStorage.getItem("trashNotesTitles"));
     let savedTrashNotes = JSON.parse(localStorage.getItem("trashNotes"));
-
     if (savedTitle) notesTitles = savedTitle;
     if (savedNote) notes = savedNote;
     if (savedArchivTitles) archivNotesTitles = savedArchivTitles;
